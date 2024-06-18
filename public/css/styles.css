@@ -160,6 +160,10 @@ main img {
   width: 95%;
 }
 
+.upgrade a {
+  background-color: white;
+}
+
 .item {
   text-align: center;
   color: #ffffff;
