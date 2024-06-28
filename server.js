@@ -11,7 +11,7 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static.js")
 const baseController = require("./controllers/baseController")
-const inventoryRoute = require("./routes/inventoryRoute.js")
+//const inventoryRoute = require("./routes/inventoryRoute.js")
 
 
 /* ***********************
@@ -31,7 +31,7 @@ app.use(static)
 app.get("/", baseController.buildHome)
 
 // Inventory routes
-app.use("/inv", inventoryRoute)
+//app.use("/inv", inventoryRoute)
 
 
 /* ***********************
