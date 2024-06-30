@@ -59,48 +59,34 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
-/* **************************************
- * Build the classification view HTML
- * ************************************ */
-Util.buildClassificationGrid = async function (data) {
-  let grid;
-  if (data.length > 0) {
-    grid = '<ul id="inv-display">';
-    data.forEach((vehicle) => {
-      grid += "<li>";
-      grid += '<a href="../../inv/detail/' + vehicle.inv_id + '" title="View ' +
-        vehicle.inv_make + " " +vehicle.inv_model +'details"><img src="' +
-        vehicle.inv_thumbnail +'" alt="' +
-        vehicle.inv_make +
-        " " +
-        vehicle.inventory_model +
-        '" /></a>';
-      grid += '<div class="namePrice">';
-      grid += "<h2>";
-      grid +=
-        '<a href="../../inv/detail/' +
-        vehicle.inv_id +
-        '" title="View ' +
-        vehicle.inv_make +
-        " " +
-        vehicle.inv_model +
-        ' details">' +
-        vehicle.inv_make +
-        " " +
-        vehicle.inv_model +
-        "</a>";
-      grid += "</h2>";
-      grid +=
-        "<span>$" +
-        new Intl.NumberFormat("en-US").format(vehicle.inv_price) +
-        "</span>";
-      grid += "</div>";
-      grid += "</li>";
-    });
-    grid += "</ul>";
-  } else {
-    grid += "No vehicle found.";
-  }
+Util.buildSingleView = async function (data) {
+  //console.log("information: ",data);
+  let grid
+  
+  grid = '<section id="inv-single">';
+  grid +=
+    "<h1>" + data.inv_make + " " + data.inv_model + "</h1>";
+    grid +=
+    '<img src="' +
+    data.inv_image +
+    '" alt="' +
+    data.inv_make +
+    " " +
+    data.inv_model +
+    '" />';
+    grid += '<section id="inv-details">';
+    grid += "<p>" + data.inv_description + "</p>";
+    grid +=
+    '<p><span class="bold">Price:</span> $' +
+    new Intl.NumberFormat("en-US").format(data.inv_price) +
+    "</p>";
+    grid +=
+    '<p><span class="bold">Color:</span> ' + data.inv_color + "</p>";
+    grid +=
+    '<p><span class="bold">Year:</span> ' + data.inv_year + "</p>";
+    grid += "</section>";
+    grid += "</section>";
+    console.log(grid);
   return grid;
 };
 

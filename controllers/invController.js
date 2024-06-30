@@ -22,13 +22,13 @@ invCont.buildByClassificationId = async function (req, res, next) {
 /* ***************************
  *  Build single view for inventory item
  * ************************** */
-inventoryController.buildSingleView = async function (req, res, next) {
+invCont.buildSingleView = async function (req, res, next) {
   const inventory_id = req.params.inventoryId;
-  const singleData = await inventoryModel.getInventoryById(inventory_id);
+  const singleData = await invModel.getInventoryById(inventory_id);
   let nav = await utilities.getNav();
   let singleView = await utilities.buildSingleView(singleData);
   res.render("./inventory/singleView", {
-    title: singleData.inventory_make + " " + singleData.inventory_model,
+    title: singleData.inv_make + " " + singleData.inv_model,
     nav,
     singleView,
     errors: null,
