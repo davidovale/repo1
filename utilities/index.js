@@ -59,4 +59,49 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
+/* **************************************
+ * Build the classification view HTML
+ * ************************************ */
+Util.buildClassificationGrid = async function (data) {
+  let grid;
+  if (data.length > 0) {
+    grid = '<ul id="inv-display">';
+    data.forEach((vehicle) => {
+      grid += "<li>";
+      grid += '<a href="../../inv/detail/' + vehicle.inventory_id + '" title="View ' +
+        vehicle.inventory_make + " " +vehicle.inventory_model +'details"><img src="' +
+        vehicle.inventory_thumbnail +'" alt="' +
+        vehicle.inventory_make +
+        " " +
+        vehicle.inventory_model +
+        '" /></a>';
+      grid += '<div class="namePrice">';
+      grid += "<h2>";
+      grid +=
+        '<a href="../../inv/detail/' +
+        vehicle.inventory_id +
+        '" title="View ' +
+        vehicle.inventory_make +
+        " " +
+        vehicle.inventory_model +
+        ' details">' +
+        vehicle.inventory_make +
+        " " +
+        vehicle.inventory_model +
+        "</a>";
+      grid += "</h2>";
+      grid +=
+        "<span>$" +
+        new Intl.NumberFormat("en-US").format(vehicle.inventory_price) +
+        "</span>";
+      grid += "</div>";
+      grid += "</li>";
+    });
+    grid += "</ul>";
+  } else {
+    grid += "No vehicle found.";
+  }
+  return grid;
+};
+
 module.exports = Util
