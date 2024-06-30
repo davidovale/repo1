@@ -68,10 +68,10 @@ Util.buildClassificationGrid = async function (data) {
     grid = '<ul id="inv-display">';
     data.forEach((vehicle) => {
       grid += "<li>";
-      grid += '<a href="../../inv/detail/' + vehicle.inventory_id + '" title="View ' +
-        vehicle.inventory_make + " " +vehicle.inventory_model +'details"><img src="' +
-        vehicle.inventory_thumbnail +'" alt="' +
-        vehicle.inventory_make +
+      grid += '<a href="../../inv/detail/' + vehicle.inv_id + '" title="View ' +
+        vehicle.inv_make + " " +vehicle.inv_model +'details"><img src="' +
+        vehicle.inv_thumbnail +'" alt="' +
+        vehicle.inv_make +
         " " +
         vehicle.inventory_model +
         '" /></a>';
@@ -79,20 +79,20 @@ Util.buildClassificationGrid = async function (data) {
       grid += "<h2>";
       grid +=
         '<a href="../../inv/detail/' +
-        vehicle.inventory_id +
+        vehicle.inv_id +
         '" title="View ' +
-        vehicle.inventory_make +
+        vehicle.inv_make +
         " " +
-        vehicle.inventory_model +
+        vehicle.inv_model +
         ' details">' +
-        vehicle.inventory_make +
+        vehicle.inv_make +
         " " +
-        vehicle.inventory_model +
+        vehicle.inv_model +
         "</a>";
       grid += "</h2>";
       grid +=
         "<span>$" +
-        new Intl.NumberFormat("en-US").format(vehicle.inventory_price) +
+        new Intl.NumberFormat("en-US").format(vehicle.inv_price) +
         "</span>";
       grid += "</div>";
       grid += "</li>";
