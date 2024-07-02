@@ -38,6 +38,12 @@ app.use("/inv", inventoryRoute)
 // Intentional Error route
 app.use('/error', utilities.handleErrors(errorRoute))
 
+app.use('/error', utilities.handleErrors(errorRoute))
+// File Not Found Route - must be last route in list
+app.use(async (req, res, next) => {
+  next({status: 404, message: '<h1>Oops...It broke!</h1><p>Sorry, we appear to have lost that page.(404)</p>'})
+})
+
 
 /* ***********************
 * Express Error Handler

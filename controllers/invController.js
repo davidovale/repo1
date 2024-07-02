@@ -11,12 +11,22 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const data = await invModel.getInventoryByClassificationId(classification_id)
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
-  const className = data[0].classification_name
-  res.render("./inventory/classification", {
-    title: className + " vehicles",
-    nav,
-    grid,
-  })
+  try{
+    const className = data[0].classification_name
+    res.render("./inventory/classification", {
+      title: className + " vehicles",
+      nav,
+      grid,
+    })
+  }catch (error){
+    let nav = await utilities.getNav();
+      // If no inventory items found, render an appropriate message
+      res.render("error/error", {
+          title: "Error",
+          nav,
+          message: "<h1>404</h1><p>Sorry, page lost.</p>",});
+  }
+ 
 }
 
 /* ***************************
