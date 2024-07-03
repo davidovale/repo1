@@ -18,7 +18,7 @@ Util.buildClassificationGrid = async function(data){
         + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
         + 'details"><img src="' + vehicle.inv_thumbnail 
         +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
-        +' on CSE Motors" /></a>'
+        +' on CSE Motors" /></a>' 
         grid += '<div class="namePrice">'
         grid += '<hr />'
         grid += '<h2>'
@@ -63,34 +63,29 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
+/* ************************
+ * Constructs the detailed view of the selected value
+ ************************** */
 Util.buildSingleView = async function (data) {
   //console.log("information: ",data);
   let grid
-  
-  grid = '<section id="inv-single">';
-  grid +=
-    "<h1>" + data.inv_make + " " + data.inv_model + "</h1>";
+  if (data == undefined){
+    grid += '<p class="notice">Sorry, page lost.</p>'
+  }else{
+    grid = '<section id="inv-single">';
     grid +=
-    '<img src="' +
-    data.inv_image +
-    '" alt="' +
-    data.inv_make +
-    " " +
-    data.inv_model +
-    '" />';
-    grid += '<section id="inv-details">';
-    grid += "<p>" + data.inv_description + "</p>";
-    grid +=
-    '<p><span class="bold">Price:</span> $' +
-    new Intl.NumberFormat("en-US").format(data.inv_price) +
-    "</p>";
-    grid +=
-    '<p><span class="bold">Color:</span> ' + data.inv_color + "</p>";
-    grid +=
-    '<p><span class="bold">Year:</span> ' + data.inv_year + "</p>";
-    grid += "</section>";
-    grid += "</section>";
-    console.log(grid);
+      "<h1>" + data.inv_make + " " + data.inv_model + "</h1>";
+      grid += '<img src="' + data.inv_image + '" alt="' + data.inv_make + " " + data.inv_model + '" />';
+      grid += '<section id="inv-details">';
+      grid += "<p>" + data.inv_description + "</p>";
+      grid += '<p><span>Mileage:</span> ' + new Intl.NumberFormat('en-US', { maximumFractionDigits: 3}).format(data.inv_miles) + "</p>";
+      grid += '<p><span>Price:</span> $' + new Intl.NumberFormat("en-US").format(data.inv_price) + "</p>";
+      grid += '<p><span>Color:</span> ' + data.inv_color + "</p>";
+      grid += '<p><span>Year:</span> ' + data.inv_year + "</p>";
+      grid += "</section>";
+      grid += "</section>";
+      console.log(grid);
+  }
   return grid;
 };
 

@@ -27,9 +27,6 @@ app.set("layout", "./layouts/layout") // not at views root
 app.use(static)
 
 //Index route
-//app.get("/", function(req, res){
-//  res.render("index", {title: "Home"})
-//})
 app.get("/", baseController.buildHome)
 
 // Inventory routes
@@ -41,7 +38,7 @@ app.use('/error', utilities.handleErrors(errorRoute))
 app.use('/error', utilities.handleErrors(errorRoute))
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
-  next({status: 404, message: '<h1>Oops...It broke!</h1><p>Sorry, we appear to have lost that page.(404)</p>'})
+  next({status: 404, message: '<h1>404</h1><p>Sorry, we appear to have lost that page.</p>'})
 })
 
 
@@ -49,22 +46,6 @@ app.use(async (req, res, next) => {
 * Express Error Handler
 * Place after all other middleware
 *************************/
-/*
-app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav()
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if(err.status == 404){ 
-    message = err.message
-  } else {
-    message = 'Oh no! There was a crash :('
-  }
-  res.render("error/error", {
-    title: err.status || 'Server Error',
-    message,
-    nav
-  })
-})
-  */
 
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav();
@@ -79,7 +60,7 @@ app.use(async (err, req, res, next) => {
           nav
       });
   } else {
-      message = '<h1>Oh no!</h1> <p>There was a crash. Maybe try a different route?</p>';
+      message = '<h1>Server Error</h1> <p>Oh no! There was a crash. Maybe try a different route?</p>';
       res.status(500).render("error/error", {
           title: 'Server Error',
           message,

@@ -20,11 +20,11 @@ invCont.buildByClassificationId = async function (req, res, next) {
     })
   }catch (error){
     let nav = await utilities.getNav();
-      // If no inventory items found, render an appropriate message
+      // If no items found, it shows the appropriate message
       res.render("error/error", {
           title: "Error",
           nav,
-          message: "<h1>404</h1><p>Sorry, page lost.</p>",});
+          message: "<h2>Sorry, we appear to have lost that page.</h2>",});
   }
  
 }
@@ -33,16 +33,25 @@ invCont.buildByClassificationId = async function (req, res, next) {
  *  Build single view for inventory item
  * ************************** */
 invCont.buildSingleView = async function (req, res, next) {
-  const inventory_id = req.params.inventoryId;
-  const singleData = await invModel.getInventoryById(inventory_id);
-  let nav = await utilities.getNav();
-  let singleView = await utilities.buildSingleView(singleData);
-  res.render("./inventory/singleView", {
-    title: singleData.inv_make + " " + singleData.inv_model,
-    nav,
-    singleView,
-    errors: null,
-  });
-};
+  try{
+    const inventory_id = req.params.inventoryId;
+    const singleData = await invModel.getInventoryById(inventory_id);
+    let nav = await utilities.getNav();
+    let singleView = await utilities.buildSingleView(singleData);
+    res.render("./inventory/singleView", {
+      title: singleData.inv_make + " " + singleData.inv_model,
+      nav,
+      singleView,
+      errors: null,
+    })
+  }catch (error){
+    let nav = await utilities.getNav();
+      // If no items found, it shows the appropriate message
+      res.render("error/error", {
+          title: "Error",
+          nav,
+          message: "<h2>Sorry, we appear to have lost that page.</h2>",});
+  }
+}
 
 module.exports = invCont
