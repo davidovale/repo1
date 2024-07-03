@@ -72,18 +72,18 @@ Util.buildSingleView = async function (data) {
   if (data == undefined){
     grid += '<p class="notice">Sorry, page lost.</p>'
   }else{
-    grid = '<section id="inv-single">';
+    grid = '<div class="divdetail"><section id="inv-single">';
     grid +=
       "<h1>" + data.inv_make + " " + data.inv_model + "</h1>";
-      grid += '<img src="' + data.inv_image + '" alt="' + data.inv_make + " " + data.inv_model + '" />';
+      grid += '<img src="' + data.inv_image + '" alt="' + data.inv_make + " " + data.inv_model + '" /></section>';
       grid += '<section id="inv-details">';
       grid += "<p>" + data.inv_description + "</p>";
       grid += '<p><span>Mileage:</span> ' + new Intl.NumberFormat('en-US', { maximumFractionDigits: 3}).format(data.inv_miles) + "</p>";
       grid += '<p><span>Price:</span> $' + new Intl.NumberFormat("en-US").format(data.inv_price) + "</p>";
       grid += '<p><span>Color:</span> ' + data.inv_color + "</p>";
       grid += '<p><span>Year:</span> ' + data.inv_year + "</p>";
-      grid += "</section>";
-      grid += "</section>";
+      grid += "</section></div>";
+     // grid += "</section>";
       console.log(grid);
   }
   return grid;
