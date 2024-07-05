@@ -236,6 +236,55 @@ footer {
   color: red; 
 }
 
+.main-content{
+  background-color: rgb(184, 250, 255);
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.content label{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  color: white;
+}
+
+.account-email input, .account-password input{
+  width: 80%;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.content{
+  background-color: #00213e;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.content a{
+  color: white;
+}
+
+#loginForm{
+  margin: 20px;
+}
+
+#btn_login {
+  background: #cbe8ff;
+  color: black;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  text-shadow: none;
+  width: 10em;
+  font-weight: bold;
+  }
+  #btn_login:hover {
+  text-shadow: none;
+  cursor: pointer;
+  }
+
 /* Tablet Size viewports */
 @media only screen and (min-width: 37em) {
 
@@ -273,6 +322,7 @@ footer {
   footer {
       font-size: 0.6em;
   }
+
 }
 
 
@@ -282,7 +332,7 @@ footer {
     padding: 20px;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
   }
 
   nav {
