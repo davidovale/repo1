@@ -48,13 +48,18 @@ app.use(expressLayouts)
 app.set("layout", "./layouts/layout") // not at views root
 
 
+
+
+/* ***********************
+ * Routes
+ *************************/
 app.use(static)
 
-//Index route
-app.get("/", baseController.buildHome)
+// Index route
+app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory routes
-app.use("/inv", inventoryRoute)
+app.use('/inv', utilities.handleErrors(inventoryRoute))
 
 // Intentional Error route
 app.use('/account', utilities.handleErrors(accountRoute))
@@ -62,7 +67,6 @@ app.use('/account', utilities.handleErrors(accountRoute))
 // Intentional Error route
 app.use('/error', utilities.handleErrors(errorRoute))
 
-app.use('/error', utilities.handleErrors(errorRoute))
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: '<h1>404</h1><p>Sorry, we appear to have lost that page.</p>'})

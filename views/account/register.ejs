@@ -1,0 +1,30 @@
+<div class="main-content">
+    <h1><%= title %></h1>
+    <div class="content">    
+        <form id="loginForm" action="/account/register" method="post">
+            <div class="account-firstName">
+                <label for="account_firstname">Email:</label>
+                <br>
+                <input type="text" id="account_firstname" name="account_firstname"/>
+            </div>
+            <div class="account-lastname">
+                <label for="account-lastname">Last Name:</label>
+                <br>
+                <input type="text" id="account_lastname" name="account_lastname"/>
+            </div>
+            <div class="account-email">
+                <label for="account_email">Email:</label>
+                <br>
+                <input type="email" id="account_email" name="account_email"/>
+            </div>
+            <div class="account-password">
+                <label for="account_password">Password:</label>
+                <br>
+                <input type="password" id="account_password" name="account_password"/>
+            </div>
+            
+            <input type="submit" name="btn_login" id="btn_login" value="Register"/>
+        </form>
+
+    </div>
+</div>
