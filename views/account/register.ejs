@@ -20,7 +20,14 @@
             <div class="account-password">
                 <label for="account_password">Password:</label>
                 <br>
-                <input type="password" id="account_password" name="account_password"/>
+                <!-- 
+                    12 characters in length, minimum
+                    contain at least 1 capital letter
+                    contain at least 1 number
+                    contain at least 1 special character
+                -->
+                <input type="password" id="account_password" name="account_password" required placeholder="See core requirements"
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"/>
             </div>
             
             <input type="submit" name="btn_login" id="btn_login" value="Register"/>
