@@ -123,7 +123,7 @@ Util.buildClassificationDropdown = async function (
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
 /* ****************************************
- *  Check Admin and Employee
+ *  Route to inventory page
  * ************************************ */
 Util.inventory = (req, res, next) => {
       next();
