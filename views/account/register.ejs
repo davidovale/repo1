@@ -1,33 +1,42 @@
 <div class="main-content">
     <h1><%= title %></h1>
-    <div class="content">    
+    <div class="content">
+        <%- messages() %> <!-- Flash messages -->
+        <% if (errors) { %>
+            <ul class="notice">
+           <% errors.array().forEach(error => { %>
+             <li><%= error.msg %></li>
+          <%  }) %>
+           </ul>
+          <% } %>    
         <form id="loginForm" action="/account/register" method="post">
             <div class="account-firstName">
-                <label for="account_firstname">Email:</label>
+                <label for="account_firstname">First Name:</label>
                 <br>
-                <input type="text" id="account_firstname" name="account_firstname"/>
+                <input type="text" id="account_firstname" name="account_firstname" required value="<%= locals.account_firstname %>"/>
             </div>
-            <div class="account-lastname">
-                <label for="account-lastname">Last Name:</label>
+            <div class="account-lastName">
+                <label for="account_lastname">Last Name:</label>
                 <br>
-                <input type="text" id="account_lastname" name="account_lastname"/>
+                <input type="text" id="account_lastname" name="account_lastname" required value="<%= locals.account_lastname %>"/>
             </div>
             <div class="account-email">
                 <label for="account_email">Email:</label>
                 <br>
-                <input type="email" id="account_email" name="account_email"/>
+                <input type="email" id="account_email" name="account_email" required placeholder="Enter a valid email address"
+                value="<%= locals.account_email %>"/>
             </div>
             <div class="account-password">
                 <label for="account_password">Password:</label>
                 <br>
-                <!-- 
-                    12 characters in length, minimum
-                    contain at least 1 capital letter
-                    contain at least 1 number
-                    contain at least 1 special character
-                -->
                 <input type="password" id="account_password" name="account_password" required placeholder="See core requirements"
                 pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"/>
+                <br>
+                <p>
+                    Passwords must be minimum of 12 characters
+                    and include 1 capital letter, 1 number and 1 special character
+                </p>
+                <span id="spanBtn">Show Password</span>
             </div>
             
             <input type="submit" name="btn_login" id="btn_login" value="Register"/>
@@ -35,3 +44,22 @@
 
     </div>
 </div>
+
+<script>
+    const spanBtn = document.querySelector("#spanBtn");
+
+    spanBtn.addEventListener("click", function() {
+        
+        const pswdInput = document.getElementById("account_password");
+        const type = pswdInput.getAttribute("type");
+        if (type == "password"){
+            pswdInput.setAttribute("type", "text");
+            spanBtn.innerHTML = "Hide Password";
+        }else {
+            pswdInput.setAttribute("type", "password");
+            spanBtn.innerHTML = "Show Password";
+        }
+    });
+
+
+</script>

@@ -1,0 +1,22 @@
+<!-- The view should contain an appropriate title and h1 value to represent its role as a management view for all things dealing with inventory. -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+        res.redirect('/')
+} %>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+<!-- The view must be capable of displaying a flash message sent from the existing inventory controller. -->
+<%- messages() %>
+
+<div class="divlinks">
+    <a href="/inv/addClassification">Add Classification</a>
+    <br>
+    <a href="/inv/addInventory">Add Inventory</a>
+</div>
+

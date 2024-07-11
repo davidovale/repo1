@@ -1,0 +1,137 @@
+<div class="cla-page">
+    <% if (title) { %>
+        <h1><%= title %></h1>
+        <% } else {
+            res.redirect('/')
+    } %>
+
+    <div id="contAddCla" class="main-content">
+        <% if (errors) { %>
+            <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+        <%  }) %>
+        </ul>
+        <% } %>
+
+        <%- messages() %>
+
+        <h3>ALL FIELDS ARE REQUIRED.</h3>
+        <form class="formInventory" action="/inv/addInventory" method="post">
+            <p>
+                <label for="classification_id" class="required">Classification</label><br>
+                <%- dropdown %>
+            </p>
+
+            <p>
+                <label for="inventory_make" class="required">Make</label><br>
+                <input 
+                    type="text" 
+                    id="inventory_make" 
+                    name="inventory_make" 
+                    class="form-input" 
+                    placeholder="Enter the make of the inventory item"
+                    required
+                    value="<%= locals.inventory_make %>"
+                >
+            </p>
+
+            <p>
+                <label for="inventory_model" class="required">Model</label><br>
+                <input 
+                    type="text" 
+                    id="inventory_model" 
+                    name="inventory_model" 
+                    class="form-input" 
+                    placeholder="Enter the model of the inventory item"
+                    required
+                    value="<%= locals.inventory_model %>"
+                >
+            </p>
+
+            <p>
+                <label for="inventory_year" class="required">Year</label><br>
+                <input 
+                    type="number" 
+                    id="inventory_year" 
+                    name="inventory_year" 
+                    class="form-input" 
+                    placeholder="Enter the year of the inventory item"
+                    required
+                    value="<%= locals.inventory_year %>"
+                >
+            </p>
+
+            <p>
+                <label for="inventory_description" class="required">Description</label><br>
+                <textarea id="inventory_description" name="inventory_description" class="form-input" placeholder="Enter the description of the inventory item" required><%= locals.inventory_description %></textarea>
+            </p>
+
+            <p>
+                <label for="inventory_image" class="required">Image</label><br>
+                <input 
+                    type="text" 
+                    id="inventory_image" 
+                    name="inventory_image" 
+                    class="form-input" 
+                    placeholder="Enter the image of the inventory item"
+                    required
+                    value="<%= locals.inventory_image %>"
+                >
+            </p>
+
+            <p>
+                <label for="inventory_thumbnail" class="required">Thumbnail</label><br>
+                <input 
+                    type="text" 
+                    id="inventory_thumbnail" 
+                    name="inventory_thumbnail" 
+                    class="form-input" 
+                    placeholder="Enter the thumbnail of the inventory item"
+                    required
+                    value="<%= locals.inventory_thumbnail %>"
+                >
+            </p>
+
+            <p>
+                <label for="inventory_price" class="required">Price</label><br>
+                <input 
+                    type="number" 
+                    id="inventory_price" 
+                    name="inventory_price" 
+                    class="form-input" 
+                    placeholder="Enter the price of the inventory item"
+                    required
+                    value="<%= locals.inventory_price %>"
+                >
+            </p>
+
+            <p>
+                <label for="inventory_miles" class="required">Miles</label><br>
+                <input 
+                    type="number" 
+                    id="inventory_miles" 
+                    name="inventory_miles" 
+                    class="form-input" 
+                    placeholder="Enter the miles of the inventory item"
+                    required
+                    value="<%= locals.inventory_miles %>"
+                >
+            </p>
+
+            <p>
+                <label for="inventory_color" class="required">Color</label><br>
+                <input 
+                    type="text" 
+                    id="inventory_color" 
+                    name="inventory_color" 
+                    class="form-input" 
+                    placeholder="Enter the color of the inventory item"
+                    required
+                    value="<%= locals.inventory_color %>"
+                >
+            </p>
+            <button type="submit" class="form-button">Add Inventory</button>
+        </form>
+    </div>
+</div>

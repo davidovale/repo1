@@ -123,6 +123,11 @@ main {
   width: 100%;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+}
+
+#inv-details{
+  width: 80%;
 }
 
 #inv-single{
@@ -249,13 +254,30 @@ footer {
   color: white;
 }
 
-.account-email input, .account-password input{
+.account-email input, .account-password input, .account-firstName input, .account-lastName input, #classification_name, .formInventory input{
   width: 80%;
   margin-bottom: 20px;
   border-radius: 5px;
   padding: 5px;
   margin: 5px;
 }
+
+#inventory_description{
+  size: 200px;
+}
+
+.account-password p{
+  color: white;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+input:required:invalid, input:focus:invalid {
+  background-color: rgb(243, 189, 189);
+ }
+  input:required:valid {
+  background-color: rgb(241, 255, 241);
+  }
 
 .content{
   background-color: #00213e;
@@ -283,6 +305,78 @@ footer {
   #btn_login:hover {
   text-shadow: none;
   cursor: pointer;
+  }
+
+  #spanBtn {
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 2px;
+    margin-top: 1em;
+    font-size: small;
+    width: 7em;
+    text-align: center;
+    color: white;
+  }
+
+  .btn_add_cla {
+    background: #cbe8ff;
+    color: black;
+    border: 1px solid #eee;
+    border-radius: 20px;                                            
+    text-shadow: none;
+    width: 10em;
+    font-weight: bold;
+    margin: 20px;
+    padding: 10px;
+    }
+    #btn_add_cla:hover {
+    text-shadow: none;
+    cursor: pointer;
+    }
+  
+    .btn_add_cla {
+      border: 2px solid #000;
+      border-radius: 5px;
+      padding: 2px;
+      margin-top: 1em;
+      font-size: small;
+      width: 7em;
+      text-align: center; 
+    }
+
+  .divlinks{
+    grid-row: 2;
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #addClassificationForm{
+    border: 2px solid blue;
+    border-radius: 20px;
+    padding: 10px;
+
+  }
+
+  #contAddCla{
+    grid-row: 1;
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+  }
+
+  .cla-page{
+    display: flex;
+    flex-direction: column;
+    grid-row-end: 3;
+    grid-row-start: 1;
+  }
+
+  .formInventory p{
+    font-size: 0.9em;
+    font-family: Arial, Helvetica, sans-serif;
+
   }
 
 /* Tablet Size viewports */
@@ -363,6 +457,7 @@ footer {
 
 .divdetail{
   flex-direction: column;
+  
 }
 
 }

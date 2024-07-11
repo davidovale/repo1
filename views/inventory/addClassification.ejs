@@ -1,0 +1,37 @@
+<div class="cla-page">
+    <% if (title) { %>
+        <h1><%= title %></h1>
+        <% } else {
+            res.redirect('/')
+    } %>
+    
+    
+    <div id="contAddCla" class="main-content">
+    <%- messages() %>
+
+    <% if (errors) { %>
+        <ul class="notice">
+    <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+    <%  }) %>
+    </ul>
+    <% } %>
+
+    
+        <h3>Field is required.</h3>
+        <h3>NAME MUST BE ALPHABETIC CHARACTERS ONLY.</h3>
+        <form id="addClassificationForm" action="/inv/addClassification" method="post">
+            <p class="form-pair">
+                <label for="classification_name" class="required">Classification Name</label><br>
+                <input type="text" id="classification_name" name="classification_name" class="form-input" 
+                placeholder="Enter the classification name" pattern="^[a-zA-Z0-9]*$" required value="<%= locals.classification_name %>"
+                >
+            </p>
+            
+
+            <p class="form-pair">
+                <button type="submit" class="btn_add_cla">Add Classification</button>
+            </p>
+        </form>
+    </div>
+</div>
