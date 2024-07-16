@@ -45,14 +45,14 @@ validate.checkClassificationName = async (req, res, next) => {
  * ***************************** */
 validate.inventoryRules = () => {
   return [
-    body("inventory_make")
+    body("inv_make")
       .trim()
       .escape()
       .notEmpty()
       .isLength({ min: 2 })
       .isAlphanumeric()
       .withMessage("Please provide a make that meets the requirements."),
-    body("inventory_model")
+    body("inv_model")
       .trim()
       .escape()
       .notEmpty()
@@ -60,44 +60,44 @@ validate.inventoryRules = () => {
       .isLength({ min: 2 })
       .isAlphanumeric()
       .withMessage("Please provide a model that meets the requirements."),
-    body("inventory_year")
+    body("inv_year")
       .trim()
       .escape()
       .notEmpty()
       .isLength({ min: 4, max: 4 })
       .isNumeric()
       .withMessage("Please provide a year that meets the requirements."),
-    body("inventory_description")
+    body("inv_description")
       .trim()
       .escape()
       .notEmpty()
       .isLength({ min: 2 })
-      .withMessage("Please provide a make that meets the requirements."),
-    body("inventory_image")
+      .withMessage("Please provide a description that meets the requirements."),
+    body("inv_image")
       .trim()
       .notEmpty()
       .isLength({ min: 2 })
       //   .isURL()
       .withMessage("Please provide an image that meets the requirements."),
-    body("inventory_thumbnail")
+    body("inv_thumbnail")
       .trim()
       .notEmpty()
       .isLength({ min: 2 })
       //   .isURL()
       .withMessage("Please provide a thumbnail that meets the requirements."),
-    body("inventory_price")
+    body("inv_price")
       .trim()
       .escape()
       .notEmpty()
       .isNumeric()
       .withMessage("Please provide a price that meets the requirements."),
-    body("inventory_miles")
+    body("inv_miles")
       .trim()
       .escape()
       .notEmpty()
       .isNumeric()
       .withMessage("Please provide miles that meet the requirements."),
-    body("inventory_color")
+    body("inv_color")
       .trim()
       .escape()
       .notEmpty()
