@@ -91,7 +91,7 @@ Util.buildSingleView = async function (data) {
   return grid;
 };
 
-Util.buildClassificationDropdown = async function (
+Util.buildClassificationList = async function (
   classification_id = null
 ) {
   try {

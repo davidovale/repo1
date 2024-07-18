@@ -122,7 +122,7 @@ validate.checkInventory = async (req, res, next) => {
   const {inv_make,inv_model,inv_year,inv_description,inv_image,inv_thumbnail,inv_price,inv_miles,inv_color,classification_id} = req.body;
   let errors = [];
   errors = validationResult(req);
-  let dropdown = await utilities.buildClassificationDropdown(classification_id);
+  let dropdown = await utilities.buildClassificationList(classification_id);
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
     res.render("inventory/addInventory", {
@@ -151,12 +151,13 @@ validate.checkInventory = async (req, res, next) => {
  * ***************************** */
 validate.checkUpdateData = async (req, res, next) => {
   const {inv_id,inv_make,inv_model,inv_year,inv_description,inv_image,inv_thumbnail,inv_price,inv_miles,inv_color,classification_id} = req.body;
+  console.log("inv_id: "+inv_id)
   let errors = [];
   errors = validationResult(req);
-  let dropdown = await utilities.buildClassificationDropdown(classification_id);
+  let dropdown = await utilities.buildClassificationList(classification_id);
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
-    res.render("inventory/editInventory", {
+    res.render("inventory/edit-inventory", {
       errors,
       title: "Edit Inventory",
       nav,

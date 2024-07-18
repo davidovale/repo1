@@ -30,6 +30,24 @@ router.post("/addInventory", managementValidate.inventoryRules(), managementVali
 utilities.handleErrors(invController.processInventory)
 );
 
+// Route for editing inventory
+//router.get("/edit/:inventoryId", utilities.checkAdminEmployee, utilities.handleErrors(invController.buildEditInventoryView));
+router.get("/edit/:inventoryId", utilities.handleErrors(invController.editInventoryView));
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
+// Route to process updated inventory
+router.post(
+    "/update/",
+    managementValidate.inventoryRules(),
+    managementValidate.checkUpdateData,
+    utilities.handleErrors(invController.updateInventory)
+)
+
+// Route for getting the delete inventory view
+router.get("/delete/:inventoryId", utilities.handleErrors(invController.buildDeleteInventoryView))
+
+// Route to process the delete inventory
+router.post("/delete/", utilities.handleErrors(invController.deleteInventory))
 
 module.exports = router;
 
