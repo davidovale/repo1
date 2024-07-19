@@ -31,8 +31,7 @@ utilities.handleErrors(invController.processInventory)
 );
 
 // Route for editing inventory
-//router.get("/edit/:inventoryId", utilities.checkAdminEmployee, utilities.handleErrors(invController.buildEditInventoryView));
-router.get("/edit/:inventoryId", utilities.handleErrors(invController.editInventoryView));
+router.get("/edit/:inventoryId", utilities.checkAdminEmployee, utilities.handleErrors(invController.editInventoryView));
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
 // Route to process updated inventory

@@ -174,9 +174,9 @@ async function accountLogin(req, res) {
 
  async function buildManagement (req, res) {
   let nav = await utilities.getNav();
- // let reviewsData = await accountModel.getReviewsByAccountId(
- //   res.locals.accountData.account_id
- // );
+  let reviewsData = await accountModel.getReviewsByAccountId(
+    res.locals.accountData.account_id
+  );
   //let reviews = await utilities.buildAccountReviews(reviewsData.rows, res);
   req.flash("notice", "You are logged in.")
   res.render("account/management", {
@@ -186,6 +186,151 @@ async function accountLogin(req, res) {
   });
 };
 
+async function buildEditAccountView (req, res) {
+  let nav = await utilities.getNav();
+  account_id = req.params.accountId;
+  const accountData = await accountModel.getAccountById(account_id);
+  res.render("account/editAccount", {
+    title: "Edit Account",
+    nav,
+    errors: null,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_email: accountData.account_email,
+  });
+};
+
+/* ****************************************
+ *  Process account data for update
+ * *************************************** */
+async function editAccount (req, res) {
+  let nav = await utilities.getNav();
+  const {
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_password,
+    account_id,
+  } = req.body;
+  const accountData = await accountModel.getAccountById(account_id);
+  const updateResult = await accountModel.updateAccount(
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_id
+  );
+
+  if (updateResult) {
+    req.flash(
+      "notice",
+      `Congratulations, ${account_firstname}. You have updated your account.`
+    );
+    res.clearCookie("jwt");
+    const updatedAccountData = await accountModel.getAccountById(account_id);
+    delete updatedAccountData.account_password;
+    const accessToken = jwt.sign(
+      updatedAccountData,
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: 3600 }
+    );
+    if (process.env.NODE_ENV === "development") {
+      res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
+    } else {
+      res.cookie("jwt", accessToken, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 3600 * 1000,
+      });
+    }
+    res.status(201).redirect("/account/");
+  } else {
+    req.flash("notice", "Sorry, the account update failed.");
+    res.status(501).render("account/editAccount", {
+      title: "Edit Account",
+      nav,
+      errors: null,
+      account_firstname: accountData.account_firstname,
+      account_lastname: accountData.account_lastname,
+      account_email: accountData.account_email,
+    });
+  }
+};
+
+/* ****************************************
+ *  Process password data for update
+ * *************************************** */
+ async function editPassword (req, res) {
+  let nav = await utilities.getNav();
+  const { account_id, account_password } = req.body;
+
+  const accountData = await accountModel.getAccountById(account_id);
+
+  const hashedPassword = bcrypt.hashSync(account_password, 10);
+
+  const updateResult = await accountModel.updatePassword(
+    account_id,
+    hashedPassword
+  );
+
+  if (updateResult) {
+    req.flash("notice", "Congratulations, your password has been updated.");
+    res.status(201).render("account/management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+    });
+  } else {
+    req.flash("notice", "Sorry, the password update failed.");
+    res.status(501).render("account/editAccount", {
+      title: "Edit Account",
+      nav,
+      errors: null,
+      account_firstname: accountData.account_firstname,
+      account_lastname: accountData.account_lastname,
+      account_email: accountData.account_email,
+    });
+  }
+};
+
+/* ****************************************
+ *  Process review edit
+ * *************************************** */
+async function editReview (req, res) {
+  let nav = await utilities.getNav();
+  const { review_id, review_text } = req.body;
+  const reviewData = await accountModel.getReviewById(review_id);
+  let review = reviewData.rows[0];
+  let formattedDate = review.review_date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  const updateResult = await accountModel.updateReview(review_id, review_text);
+
+  if (updateResult) {
+    req.flash("notice", "Congratulations, your review has been updated.");
+    res.status(201).render("account/management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+    });
+  } else {
+    req.flash("notice", "Sorry, the review update failed.");
+    res.status(501).render("account/editReview", {
+      title:
+        "Edit " +
+        inventory.inventory_year +
+        " " +
+        inventory.inventory_make +
+        " " +
+        inventory.inventory_model +
+        " Review",
+      nav,
+      formattedDate,
+      errors: null,
+    });
+  }
+};
 
 
   module.exports = {
@@ -194,5 +339,9 @@ async function accountLogin(req, res) {
     registerAccount,
     accountLogin,
     buildManagement,
-    accountLogout
+    accountLogout,
+    buildEditAccountView,
+    editAccount,
+    editPassword,
+    editReview
   }

@@ -14,6 +14,18 @@ router.get('/register', utilities.handleErrors(accountController.buildRegister))
 // Process logout
 router.get("/logout", utilities.handleErrors(accountController.accountLogout))
 
+// Build account edit view
+router.get("/editAccount/:accountId", utilities.handleErrors(accountController.buildEditAccountView))
+
+// Process account edit account data
+router.post("/editData", 
+  regValidate.accountRules(),
+  utilities.handleErrors(accountController.editAccount))
+
+// Process account edit password
+router.post("/editPassword",
+  regValidate.passwordRules(),
+  utilities.handleErrors(accountController.editPassword))
 
 // Process the registration data
 router.post(

@@ -173,7 +173,6 @@ Util.checkAdminEmployee = (req, res, next) => {
   if (res.locals.loggedin) {
     const account_type = res.locals.accountData.account_type;
     if (account_type == "Admin" || account_type == "Employee") {
-      // you're good to continue
       next();
     } else {
       req.flash(
@@ -187,5 +186,35 @@ Util.checkAdminEmployee = (req, res, next) => {
     res.redirect("/account/login");
   }
 };
+
+/* ****************************************
+ * Build the reviews HTML for the management view
+ **************************************** */
+Util.buildAccountReviews = async function (reviewsData, res) {
+  console.log("reviewData: "+reviewsData)
+  let reviews = "<ul class='reviewList'>";
+  reviewsData.forEach((review) => {
+    let screenName =
+      res.locals.accountData.account_firstname[0] +
+      " " +
+      res.locals.accountData.account_lastname;
+    let formattedDate = review.review_date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    reviews += "<li>";
+    reviews += "<h3>" + screenName + " wrote on " + formattedDate + "</h3>";
+    reviews += "<p>" + review.review_text + "</p>";
+
+    // only difference *eyeroll* = edit and delete links
+    reviews += '<a href="/account/editReview/' + review.review_id + '">| Edit |</a>';
+    reviews += '<a href="/account/deleteReview/' + review.review_id + '"> Delete | </a>';
+
+    reviews += "</li>";
+  });
+  reviews += "</ul>";
+  return reviews;
+}
 
 module.exports = Util
