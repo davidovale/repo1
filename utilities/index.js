@@ -10,7 +10,7 @@ require("dotenv").config()
 Util.buildClassificationGrid = async function(data){
   let grid
   if (data == undefined){
-    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+    grid += '<p class="notice">Sorr                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           y, no matching vehicles could be found.</p>'
   }else{
     if(data.length > 0 ){
       grid = '<ul id="inv-display">'
@@ -59,7 +59,7 @@ Util.getNav = async function (req, res, next) {
       ' vehicles">' +
       row.classification_name +
       "</a>"
-    list += "</li>"
+    list += "</li>" 
   })
   list += "</ul>"
   return list
@@ -165,5 +165,27 @@ Util.checkJWTToken = (req, res, next) => {
     return res.redirect("/account/login")
   }
  }
+
+ /* ****************************************
+ *  Check Admin and Employee
+ * ************************************ */
+Util.checkAdminEmployee = (req, res, next) => {
+  if (res.locals.loggedin) {
+    const account_type = res.locals.accountData.account_type;
+    if (account_type == "Admin" || account_type == "Employee") {
+      // you're good to continue
+      next();
+    } else {
+      req.flash(
+        "notice",
+        "Your account type does not have access for this page."
+      );
+      res.redirect("/account/login");
+    }
+  } else {
+    req.flash("notice", "Your account type does not have access for this page.");
+    res.redirect("/account/login");
+  }
+};
 
 module.exports = Util
