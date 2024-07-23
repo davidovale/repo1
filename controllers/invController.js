@@ -9,14 +9,17 @@ const invCont = {}
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId
   const data = await invModel.getInventoryByClassificationId(classification_id)
+  const country = await utilities.getCountry()
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
+  console.log("tentando classification_id: "+ data)
   try{
     const className = data[0].classification_name
     res.render("./inventory/classification", {
       title: className + " vehicles",
       nav,
       grid,
+      country
     })
   }catch (error){
     let nav = await utilities.getNav();
@@ -30,17 +33,49 @@ invCont.buildByClassificationId = async function (req, res, next) {
 }
 
 /* ***************************
+ *  Build inventory by country view
+ * ************************** */
+invCont.buildByCountryId = async function (req, res, next) {
+  const country_id = req.params.countryId
+  const data = await invModel.getInventoryByCountryId(country_id)
+  const grid = await utilities.buildClassificationGrid(data)
+  const country = await utilities.getCountry()
+  let nav = await utilities.getNav()
+  console.log("country invController "+country)
+  try{
+    const className = data[0].country_name
+    res.render("./inventory/classification", {
+      title: className + " ",
+      nav,
+      grid,
+      country
+    })
+  }catch (error){
+    let nav = await utilities.getNav();
+      // If no items found, it shows the appropriate message
+      res.render("error/error", {
+          title: "Error",
+          nav,
+          grid,
+          message: "<h2>Sorry, we appear to have lost that page.</h2>",});
+  }
+ 
+}
+
+/* ***************************
  *  Build single view for inventory item
  * ************************** */
 invCont.buildSingleView = async function (req, res, next) {
+  console.log("buildsingleview invcontroller.js")
   try{
     const inventory_id = req.params.inventoryId;
-    const singleData = await invModel.getInventoryById(inventory_id);
+    const country = await invModel.getInventoryById(utilities.getCountry);
     let nav = await utilities.getNav();
     let singleView = await utilities.buildSingleView(singleData);
     res.render("./inventory/singleView", {
       title: singleData.inv_make + " " + singleData.inv_model,
       nav,
+      country,
       singleView,
       errors: null,
     })
@@ -60,7 +95,7 @@ invCont.buildSingleView = async function (req, res, next) {
 invCont.buildManagementView = async function (req, res, next) {
   let nav = await utilities.getNav();
   // const data = await invModel.getClassifications();
-
+  console.log("buildManagementView invController.js")
   let classificationDropdown = await utilities.buildClassificationList();
 
   res.render("./inventory/management", {

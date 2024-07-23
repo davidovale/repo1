@@ -11,7 +11,50 @@ async function getClassifications(){
  *  Get all inventory items and classification_name by classification_id
  * ************************** */
 async function getInventoryByClassificationId(classification_id) {
-  console.log(classification_id);
+  console.log("getInventoryByClassificationId inventory-model");
+  try {
+    const data = await pool.query(
+      `select * from public.inventory as inv join public.classification as cla 
+      on inv.classification_id = cla.classification_id where inv.classification_id = $1`,
+      [classification_id]
+    )
+    return data.rows
+  } catch (error) {
+    console.error("getclassificationsbyid error " + error)
+  }
+}
+
+/* ***************************
+ *  Get all inventory items by country_id
+ * ************************** */
+async function getInventoryByCountryId(country_id) {
+  console.log("meu country_id: "+country_id);
+  try {
+    const data = await pool.query(
+      `select * from public.inventory as inv join public.country as c 
+      on inv.country_id = c.country_id where inv.country_id = $1`,
+      [country_id]
+    )
+    return data.rows
+  } catch (error) {
+    console.error("getclassificationsbyid error " + error)
+  }
+}
+
+
+/* ***************************
+ *  Get all classification data
+ * ************************** */
+async function getCountry(){
+  console.log("getCountry")
+  return await pool.query("select * from public.country order by country_name")
+}
+
+/* ***************************
+ *  Get all inventory items and classification_name by classification_id
+ * ************************** */
+async function getInventoryByClassificationId(classification_id) {
+  console.log("getInventoryByClassificationId");
   try {
     const data = await pool.query(
       `select * from public.inventory as inv join public.classification as cla 
@@ -147,5 +190,7 @@ module.exports = {
   addClassification, 
   addInventory,
   updateInventory,
-  deleteInventory
+  deleteInventory,
+  getCountry,
+  getInventoryByCountryId
 };
