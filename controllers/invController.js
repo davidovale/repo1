@@ -9,6 +9,7 @@ const invCont = {}
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId
   const data = await invModel.getInventoryByClassificationId(classification_id)
+  const country = await utilities.getCountry()
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
   try{
@@ -17,6 +18,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
       title: className + " vehicles",
       nav,
       grid,
+      country
     })
   }catch (error){
     let nav = await utilities.getNav();
@@ -82,6 +84,36 @@ invCont.buildClassificationView = async function (req, res, next) {
     errors: null,
   });
 };
+
+/* ***************************
+ *  Build inventory by all countries view
+ * ************************** */
+invCont.buildByCountryId = async function (req, res, next) {
+  const country_id = req.params.countryId
+  const data = await invModel.getInventoryByCountryId(country_id)
+  
+  const grid = await utilities.buildClassificationGrid(data)
+  const country = await utilities.getCountry()
+  const nav = await utilities.getNav()
+  try{
+    const className = data[0].country_name
+      res.render("./inventory/classification", {
+        title: className + " ",
+        nav,
+        grid,
+        country
+      })    
+  }catch (error){
+    let nav = await utilities.getNav();
+      // If no items found, it shows the appropriate message
+      res.render("error/error", {
+          title: "Error",
+          nav,
+          grid,
+          message: "<h2>Sorry, we appear to have lost that page.</h2>",});
+  }
+ 
+}
 
 /* ***************************
  *  Process new classification

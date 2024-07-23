@@ -42,6 +42,31 @@ Util.buildClassificationGrid = async function(data){
 }
 
 /* ************************
+ * Constructs the countries list
+ ************************** */
+Util.getCountry = async function (req, res, next) {
+  let data = await invModel.getCountry()
+  console.log(data)
+  let list = "<ul>"
+  list += '<li><a href="/inv/type/country/all" title="All">All</a></li>'
+  data.rows.forEach((row) => {
+    list += "<li>"
+    list +=
+      '<a href="/inv/type/country/' +
+      row.country_id +
+      '" title="See  ' +
+      row.country_name +
+      ' country">' +
+      row.country_name +
+      "</a>"
+      ' "></a>'
+    list += "</li>" 
+  })
+  list += "</ul>"
+  return list;
+}
+
+/* ************************
  * Constructs the nav HTML unordered list
  ************************** */
 Util.getNav = async function (req, res, next) {

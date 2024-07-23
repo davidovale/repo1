@@ -25,6 +25,13 @@ async function getInventoryByClassificationId(classification_id) {
 }
 
 /* ***************************
+ *  Get all classification data
+ * ************************** */
+async function getCountry(){
+  return await pool.query("select * from public.country order by country_name")
+}
+
+/* ***************************
  *  Get all inventory items and inventory_name by inventory_id
  * ************************** */
 async function getInventoryById(inv_id) {
@@ -36,6 +43,22 @@ async function getInventoryById(inv_id) {
     return data.rows[0];
   } catch (error) {
     console.error("getInventoryById error " + error);
+  }
+}
+
+/* ***************************
+ *  Get all inventory items by country_id
+ * ************************** */
+async function getInventoryByCountryId(country_id) {
+  try {
+    const data = await pool.query(
+      `select * from public.inventory as inv join public.country as c 
+      on inv.country_id = c.country_id where inv.country_id = $1`,
+      [country_id]
+    )
+    return data.rows
+  } catch (error) {
+    console.error("getclassificationsbyid error " + error)
   }
 }
 
@@ -147,5 +170,7 @@ module.exports = {
   addClassification, 
   addInventory,
   updateInventory,
-  deleteInventory
+  deleteInventory,
+  getInventoryByCountryId,
+  getCountry
 };

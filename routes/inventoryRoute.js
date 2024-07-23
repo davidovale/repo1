@@ -15,6 +15,9 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 // Route to build single view for inventory item
 router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildSingleView));
 
+// Route to build inventory by country view
+router.get("/type/country/:countryId", utilities.handleErrors(invController.buildByCountryId));
+
 // Route for new classification
 router.get("/addClassification", utilities.inventory, utilities.handleErrors(invController.buildClassificationView));
 
