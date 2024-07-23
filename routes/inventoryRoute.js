@@ -12,6 +12,9 @@ router.get('/', utilities.handleErrors(invController.buildManagementView));
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
+// Route to build inventory by country view
+router.get("/type/country/:countryId", utilities.handleErrors(invController.buildByCountryId));
+
 // Route to build single view for inventory item
 router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildSingleView));
 

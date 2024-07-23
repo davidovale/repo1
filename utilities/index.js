@@ -71,7 +71,7 @@ Util.getCountry = async function (req, res, next) {
  ************************** */
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
-  //console.log(data)
+  console.log("getNav" + data)
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
   data.rows.forEach((row) => {
@@ -88,6 +88,31 @@ Util.getNav = async function (req, res, next) {
   })
   list += "</ul>"
   return list
+}
+
+/* ************************
+ * Constructs the countries list
+ ************************** */
+Util.getCountry = async function (req, res, next) {
+  let data = await invModel.getCountry()
+  console.log(data)
+  let list = "<ul>"
+  list += '<li><a href="/" title="All">All</a></li>'
+  data.rows.forEach((row) => {
+    list += "<li>"
+    list +=
+      '<a href="/inv/type/country/' +
+      row.country_id +
+      '" title="See  ' +
+      row.country_name +
+      ' country">' +
+      row.country_name +
+      "</a>"
+      ' "></a>'
+    list += "</li>" 
+  })
+  list += "</ul>"
+  return list;
 }
 
 /* ************************
