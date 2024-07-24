@@ -150,7 +150,7 @@ Util.buildSingleView = async function (data) {
       grid += '<p><span>Country:</span> ' + data.country_name + "</p>";
       grid += "</section></div>";
      // grid += "</section>";
-      console.log(grid);
+      //console.log(grid);
   }
   return grid;
 };
@@ -165,7 +165,7 @@ Util.buildClassificationList = async function (
     classificationList += "<option value=''>Choose a Classification</option>";
     data.rows.forEach((row) => {
       classificationList += `<option value="${row.classification_id}"`;
-      console.log("row.classification_id: "+row.classification_id+" classification_id: "+classification_id)
+      //console.log("row.classification_id: "+row.classification_id+" classification_id: "+classification_id)
       if (
         classification_id != null &&
         row.classification_id == classification_id
@@ -192,7 +192,7 @@ Util.buildCountryList = async function (
       countryList += "<option value=''>Choose a Country</option>";
     data.rows.forEach((row) => {
       countryList += `<option value="${row.country_id}"`;
-      console.log("row.country_id: "+row.country_id+" country_id: "+country_id)
+      //console.log("row.country_id: "+row.country_id+" country_id: "+country_id)
       if (
         countryList != null &&
         row.country_id == country_id
@@ -283,7 +283,7 @@ Util.checkAdminEmployee = (req, res, next) => {
  * Build the reviews HTML for the management view
  **************************************** */
 Util.buildAccountReviews = async function (reviewsData, res) {
-  console.log("reviewData: "+reviewsData)
+ // console.log("reviewData: "+reviewsData)
   let reviews = "<ul class='reviewList'>";
   reviewsData.forEach((review) => {
     let screenName =

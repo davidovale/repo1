@@ -211,7 +211,7 @@ invCont.editInventoryView = async function (req, res, next) {
   let nav = await utilities.getNav()
   const inv_id = req.params.inventoryId
   const itemData = await invModel.getInventoryById(inv_id)
-  console.log("inventory_id: "+inv_id+" COUNTRY: "+itemData.country_id)
+  //console.log("inventory_id: "+inv_id+" COUNTRY: "+itemData.country_id)
   const classificationSelect = await utilities.buildClassificationList(itemData.classification_id)
   const countrySelect = await utilities.buildCountryList(itemData.country_id)
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
@@ -221,7 +221,7 @@ invCont.editInventoryView = async function (req, res, next) {
   let dropdownCountry = await utilities.buildCountryList(
     itemData.country_id
   );
-  console.log("itemData. inv_id: "+itemData.inv_id)
+  //console.log("itemData. inv_id: "+itemData.inv_id)
   res.render("./inventory/edit-inventory", {
     title: "Edit " + itemName,
     nav,
@@ -263,7 +263,7 @@ invCont.updateInventory = async function (req, res, next) {
       classification_id,
       inventory_id
   } = req.body;
-console.log("invCont.updateInventory: "+ inv_make, inv_year, country_id)
+//console.log("invCont.updateInventory: "+ inv_make, inv_year, country_id)
   const updateResult = await invModel.updateInventory(
     inv_make,
       inv_model,
@@ -319,9 +319,9 @@ console.log("invCont.updateInventory: "+ inv_make, inv_year, country_id)
  * ************************** */
 invCont.getInventoryJSON = async (req, res, next) => {
   const classification_id = parseInt(req.params.classification_id)
-  console.log("classificação: "+classification_id)
+  //console.log("classificação: "+classification_id)
   const invData = await invModel.getInventoryByClassificationId(classification_id)
-  console.log("test inv_id"+invData[0].inv_id)
+  //console.log("test inv_id"+invData[0].inv_id)
   if (invData[0].inv_id) {
     return res.json(invData)
   } else {
@@ -335,7 +335,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
 invCont.buildDeleteInventoryView = async function (req, res, next) {
   let nav = await utilities.getNav();
   const inventoryId = req.params.inventoryId;
-  console.log("delete inventory_id: "+inventoryId)
+  //console.log("delete inventory_id: "+inventoryId)
   const itemData = await invModel.getInventoryById(inventoryId);
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`;
   let dropdown = await utilities.buildClassificationList(
@@ -362,7 +362,7 @@ invCont.deleteInventory = async function (req, res, next) {
   let nav = await utilities.getNav();
   const { inv_make, inv_model, classification_id, inventory_id } =
     req.body;
-    console.log("trying delete: "+inventory_id)
+    //console.log("trying delete: "+inventory_id)
   const deleteResult = await invModel.deleteInventory(inventory_id);
 
   if (deleteResult) {

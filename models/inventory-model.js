@@ -11,7 +11,7 @@ async function getClassifications(){
  *  Get all inventory items and classification_name by classification_id
  * ************************** */
 async function getInventoryByClassificationId(classification_id) {
-  console.log("getInventoryByClassificationId inventory-model");
+  //console.log("getInventoryByClassificationId inventory-model");
   try {
     const data = await pool.query(
       `select * from public.inventory as inv join public.classification as cla 
@@ -28,7 +28,7 @@ async function getInventoryByClassificationId(classification_id) {
  *  Get all inventory items by country_id
  * ************************** */
 async function getInventoryByCountryId(country_id) {
-  console.log("meu country_id: "+country_id);
+  //console.log("meu country_id: "+country_id);
   try {
     const data = await pool.query(
       `select * from public.inventory as inv join public.country as c 
@@ -46,7 +46,7 @@ async function getInventoryByCountryId(country_id) {
  *  Get all classification data
  * ************************** */
 async function getCountry(){
-  console.log("getCountry")
+  //console.log("getCountry")
   return await pool.query("select * from public.country order by country_name")
 }
 
@@ -54,7 +54,7 @@ async function getCountry(){
  *  Get all inventory items and classification_name by classification_id
  * ************************** */
 async function getInventoryByClassificationId(classification_id) {
-  console.log("getInventoryByClassificationId");
+  //console.log("getInventoryByClassificationId");
   try {
     const data = await pool.query(
       `select * from public.inventory as inv join public.classification as cla 
@@ -132,7 +132,7 @@ async function addInventory(
   classification_id
 ) {
   try {
-    console.log("id de country: "+country_id)
+    //console.log("id de country: "+country_id)
     const sql = `INSERT INTO public.inventory (inv_make, inv_model, inv_year, inv_description, 
     inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, country_id, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`;
     const inputList = [
@@ -176,7 +176,7 @@ async function updateInventory(
   try {
     const sql =
       "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_year = $3, inv_description = $4, inv_image = $5, inv_thumbnail = $6, inv_price = $7, inv_miles = $8, inv_color = $9, country_id = $10, classification_id = $11 WHERE inv_id = $12 RETURNING *";
-      console.log(inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, country_id, classification_id, inv_id)
+      //console.log(inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, country_id, classification_id, inv_id)
       const data = await pool.query(sql, [
       inv_make,
       inv_model,
