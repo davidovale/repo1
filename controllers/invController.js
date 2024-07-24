@@ -210,9 +210,10 @@ invCont.processInventory = async function (req, res, next) {
 invCont.editInventoryView = async function (req, res, next) {
   let nav = await utilities.getNav()
   const inv_id = req.params.inventoryId
-  console.log("inventory_id: "+inv_id)
   const itemData = await invModel.getInventoryById(inv_id)
+  console.log("inventory_id: "+inv_id+" COUNTRY: "+itemData.country_id)
   const classificationSelect = await utilities.buildClassificationList(itemData.classification_id)
+  const countrySelect = await utilities.buildCountryList(itemData.country_id)
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
   let dropdown = await utilities.buildClassificationList(
     itemData.classification_id
@@ -227,6 +228,7 @@ invCont.editInventoryView = async function (req, res, next) {
     dropdown,
     dropdownCountry,
     classificationSelect: classificationSelect,
+    countrySelect: countrySelect,
     errors: null,
     inv_id: itemData.inv_id,
     inv_make: itemData.inv_make,
@@ -261,7 +263,7 @@ invCont.updateInventory = async function (req, res, next) {
       classification_id,
       inventory_id
   } = req.body;
-
+console.log("invCont.updateInventory: "+ inv_make, inv_year, country_id)
   const updateResult = await invModel.updateInventory(
     inv_make,
       inv_model,

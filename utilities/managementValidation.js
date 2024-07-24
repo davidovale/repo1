@@ -119,7 +119,8 @@ validate.inventoryRules = () => {
  * Check inventory inputs
  * ***************************** */
 validate.checkInventory = async (req, res, next) => {
-  const {inv_make,inv_model,inv_year,inv_description,inv_image,inv_thumbnail,inv_price,inv_miles,inv_color,classification_id, country_id} = req.body;
+  const {inv_make,inv_model,inv_year,inv_description,inv_image,inv_thumbnail,inv_price,inv_miles,inv_color, country_id,classification_id} = req.body;
+  console.log("teste: "+country_id)
   let errors = [];
   errors = validationResult(req);
   let dropdown = await utilities.buildClassificationList(classification_id);
@@ -141,8 +142,8 @@ validate.checkInventory = async (req, res, next) => {
       inv_price,
       inv_miles,
       inv_color,
+      country_id,
       classification_id,
-      country_id
     });
     return;
   }
@@ -153,7 +154,7 @@ validate.checkInventory = async (req, res, next) => {
  * Check update data - send to edit view instead of add view
  * ***************************** */
 validate.checkUpdateData = async (req, res, next) => {
-  const {inv_id,inv_make,inv_model,inv_year,inv_description,inv_image,inv_thumbnail,inv_price,inv_miles,inv_color,classification_id, country_id} = req.body;
+  const {inv_id,inv_make,inv_model,inv_year,inv_description,inv_image,inv_thumbnail,inv_price,inv_miles,inv_color,country_id,classification_id} = req.body;
   console.log("inv_id: "+inv_id)
   let errors = [];
   errors = validationResult(req);
@@ -177,7 +178,8 @@ validate.checkUpdateData = async (req, res, next) => {
       inv_price,
       inv_miles,
       inv_color,
-      classification_id,
+      country_id,
+      classification_id
     });
     return;
   }

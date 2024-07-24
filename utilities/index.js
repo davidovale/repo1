@@ -165,6 +165,7 @@ Util.buildClassificationList = async function (
     classificationList += "<option value=''>Choose a Classification</option>";
     data.rows.forEach((row) => {
       classificationList += `<option value="${row.classification_id}"`;
+      console.log("row.classification_id: "+row.classification_id+" classification_id: "+classification_id)
       if (
         classification_id != null &&
         row.classification_id == classification_id
@@ -182,7 +183,7 @@ Util.buildClassificationList = async function (
 };
 
 Util.buildCountryList = async function (
-  classification_id = null
+  country_id = null
 ) {
   try {
     let data = await invModel.getCountry();
@@ -191,9 +192,10 @@ Util.buildCountryList = async function (
       countryList += "<option value=''>Choose a Country</option>";
     data.rows.forEach((row) => {
       countryList += `<option value="${row.country_id}"`;
+      console.log("row.country_id: "+row.country_id+" country_id: "+country_id)
       if (
         countryList != null &&
-        row.country_id == countryList
+        row.country_id == country_id
       ) {
         countryList += " selected ";
       }

@@ -130,6 +130,10 @@
             value="<%= locals.inv_color %>"
         >
     </p>
+    <p class="form-pair">
+        <label for="country_id" class="required">Country</label>
+        <%- dropdownCountry %>
+    </p>
     <input type="hidden" name="inventory_id"
     <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
     <% } %>>

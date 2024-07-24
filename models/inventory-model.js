@@ -81,7 +81,7 @@ async function getInventoryById(inv_id) {
   try {
     const data = await pool.query(
       //`select * from public.inventory as i where i.inv_id =  $1`,
-      'select inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id, c.country_name as country_name from public.inventory as i inner join country c on i.country_id = c.country_id where i.inv_id = $1',
+      'select inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id, c.country_name as country_name, c.country_id as country_id from public.inventory as i inner join country c on i.country_id = c.country_id where i.inv_id = $1',
       [inv_id]
     );
     return data.rows[0];
@@ -169,14 +169,14 @@ async function updateInventory(
   inv_year,
   inv_miles,
   inv_color,
-  classification_id,
   country_id,
+  classification_id,
   inv_id
 ) {
   try {
     const sql =
-      "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_year = $3, inv_description = $4, inv_image = $5, inv_thumbnail = $6, inv_price = $7, inv_miles = $8, inv_color = $9, classification_id = $10 WHERE inv_id = $11 RETURNING *";
-      //console.log(inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id, inv_id)
+      "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_year = $3, inv_description = $4, inv_image = $5, inv_thumbnail = $6, inv_price = $7, inv_miles = $8, inv_color = $9, country_id = $10, classification_id = $11 WHERE inv_id = $12 RETURNING *";
+      console.log(inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, country_id, classification_id, inv_id)
       const data = await pool.query(sql, [
       inv_make,
       inv_model,
@@ -187,6 +187,7 @@ async function updateInventory(
       inv_year,
       inv_miles,
       inv_color,
+      country_id,
       classification_id,
       inv_id,
     ]);
