@@ -80,7 +80,8 @@ async function getCountry(){
 async function getInventoryById(inv_id) {
   try {
     const data = await pool.query(
-      `select * from public.inventory as i where i.inv_id =  $1`,
+      //`select * from public.inventory as i where i.inv_id =  $1`,
+      'select inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id, c.country_name as country_name from public.inventory as i inner join country c on i.country_id = c.country_id where i.inv_id = $1',
       [inv_id]
     );
     return data.rows[0];

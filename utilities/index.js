@@ -41,6 +41,43 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+/* **************************************
+* Build the country view HTML
+* ************************************ */
+Util.buildCountryGrid = async function(data){
+  let grid
+  if (data == undefined){
+    grid += '<p class="notice">Sorr                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           y, no matching vehicles could be found.</p>'
+  }else{
+    if(data.length > 0 ){
+      grid = '<ul id="inv-display">'
+      data.forEach(vehicle => { 
+        grid += '<li>'
+        grid +=  '<a href="/../../inv/detail/'+ vehicle.inv_id 
+        + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
+        + 'details"><img src="' + vehicle.inv_thumbnail 
+        +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
+        +' on CSE Motors" /></a>' 
+        grid += '<div class="namePrice">'
+        grid += '<hr />'
+        grid += '<h2>'
+        grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
+        + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
+        + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
+        grid += '</h2>'
+        grid += '<span>$' 
+        + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
+        grid += '</div>'
+        grid += '</li>'
+      })
+      grid += '</ul>'
+    } else { 
+      grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+    }
+  }
+  return grid
+}
+
 /* ************************
  * Constructs the countries list
  ************************** */
@@ -90,30 +127,6 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
-/* ************************
- * Constructs the countries list
- ************************** */
-Util.getCountry = async function (req, res, next) {
-  let data = await invModel.getCountry()
-  console.log(data)
-  let list = "<ul>"
-  list += '<li><a href="/" title="All">All</a></li>'
-  data.rows.forEach((row) => {
-    list += "<li>"
-    list +=
-      '<a href="/inv/type/country/' +
-      row.country_id +
-      '" title="See  ' +
-      row.country_name +
-      ' country">' +
-      row.country_name +
-      "</a>"
-      ' "></a>'
-    list += "</li>" 
-  })
-  list += "</ul>"
-  return list;
-}
 
 /* ************************
  * Constructs the detailed view of the selected value
@@ -134,6 +147,7 @@ Util.buildSingleView = async function (data) {
       grid += '<p><span>Price:</span> $' + new Intl.NumberFormat("en-US").format(data.inv_price) + "</p>";
       grid += '<p><span>Color:</span> ' + data.inv_color + "</p>";
       grid += '<p><span>Year:</span> ' + data.inv_year + "</p>";
+      grid += '<p><span>Country:</span> ' + data.country_name + "</p>";
       grid += "</section></div>";
      // grid += "</section>";
       console.log(grid);
