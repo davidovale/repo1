@@ -65,12 +65,14 @@ invCont.buildManagementView = async function (req, res, next) {
   // const data = await invModel.getClassifications();
 
   let classificationDropdown = await utilities.buildClassificationList();
+  let countryDropdown = await utilities.buildCountryList();
 
   res.render("./inventory/management", {
     title: "Vehicle Management",
     nav,
     classificationDropdown,
     errors: null,
+    countryDropdown
   });
 };
 
@@ -151,10 +153,13 @@ invCont.buildInventoryView = async function (req, res, next) {
   try {
     let nav = await utilities.getNav();
     let dropdown = await utilities.buildClassificationList();
+    let dropdownCountry = await utilities.buildCountryList();
+
     res.render("./inventory/addInventory", {
       title: "Add Inventory",
       nav,
       dropdown: dropdown,
+      dropdownCountry: dropdownCountry,
       errors: null,
     });
   } catch (error) {
@@ -169,11 +174,12 @@ invCont.buildInventoryView = async function (req, res, next) {
 invCont.processInventory = async function (req, res, next) {
   let nav = await utilities.getNav();
 
-  const {inv_make,inv_model,inv_year,inv_description,inv_image,inv_thumbnail,inv_price,inv_miles,inv_color,classification_id} = req.body;
+  const {inv_make,inv_model,inv_year,inv_description,inv_image,inv_thumbnail,inv_price,inv_miles,inv_color,country_id,classification_id} = req.body;
 
   let dropdown = await utilities.buildClassificationList(classification_id);
+  let dropdownCountry = await utilities.buildCountryList(country_id);
   const inventoryResult = await invModel.addInventory(
-    inv_make,inv_model,inv_year,inv_description,inv_image,inv_thumbnail,inv_price,inv_miles,inv_color,classification_id);
+    inv_make,inv_model,inv_year,inv_description,inv_image,inv_thumbnail,inv_price,inv_miles,inv_color,country_id,classification_id);
   if (inventoryResult) {
     req.flash(
       "notice",
@@ -184,6 +190,7 @@ invCont.processInventory = async function (req, res, next) {
       nav,
       errors: null,
       dropdown,
+      dropdownCountry
     });
   } else {
     req.flash("notice", "Sorry, the inventory failed.");
@@ -192,6 +199,7 @@ invCont.processInventory = async function (req, res, next) {
       nav,
       errors: null,
       dropdown,
+      dropdownCountry
     });
   }
 };
@@ -209,11 +217,15 @@ invCont.editInventoryView = async function (req, res, next) {
   let dropdown = await utilities.buildClassificationList(
     itemData.classification_id
   );
+  let dropdownCountry = await utilities.buildCountryList(
+    itemData.country_id
+  );
   console.log("itemData. inv_id: "+itemData.inv_id)
   res.render("./inventory/edit-inventory", {
     title: "Edit " + itemName,
     nav,
     dropdown,
+    dropdownCountry,
     classificationSelect: classificationSelect,
     errors: null,
     inv_id: itemData.inv_id,
@@ -245,6 +257,7 @@ invCont.updateInventory = async function (req, res, next) {
       inv_price,
       inv_miles,
       inv_color,
+      country_id,
       classification_id,
       inventory_id
   } = req.body;
@@ -259,6 +272,7 @@ invCont.updateInventory = async function (req, res, next) {
       inv_price,
       inv_miles,
       inv_color,
+      country_id,
       classification_id,
       inventory_id
   );
@@ -272,12 +286,16 @@ invCont.updateInventory = async function (req, res, next) {
     const dropdown = await utilities.buildClassificationList(
       classification_id
     );
+    const dropdownCountry = await utilities.buildCountryList(
+      country_id
+    );
     const itemName = `${inv_make} ${inv_model}`;
     req.flash("notice", "Sorry, the update failed.");
     res.status(501).render("inventory/edit-inventory", {
       title: "Edit " + itemName,
       nav,
       dropdown: dropdown,
+      dropdownCountry: dropdownCountry,
       errors: null,
       inv_make,
       inv_model,

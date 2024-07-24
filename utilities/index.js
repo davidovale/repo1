@@ -85,7 +85,7 @@ Util.getCountry = async function (req, res, next) {
   let data = await invModel.getCountry()
   console.log(data)
   let list = "<ul>"
-  list += '<li><a href="/inv/type/country/all" title="All">All</a></li>'
+  //list += '<li><a href="/inv/type/country/all" title="All">All</a></li>'
   data.rows.forEach((row) => {
     list += "<li>"
     list +=
@@ -177,6 +177,32 @@ Util.buildClassificationList = async function (
     return classificationList;
   } catch (error) {
     console.error("Error building classification dropdown:", error);
+    throw error;
+  }
+};
+
+Util.buildCountryList = async function (
+  classification_id = null
+) {
+  try {
+    let data = await invModel.getCountry();
+    let countryList =
+      '<select name="country_id" id="countryList" required>';
+      countryList += "<option value=''>Choose a Country</option>";
+    data.rows.forEach((row) => {
+      countryList += `<option value="${row.country_id}"`;
+      if (
+        countryList != null &&
+        row.country_id == countryList
+      ) {
+        countryList += " selected ";
+      }
+      countryList += `>${row.country_name}</option>`;
+    });
+    countryList += "</select>";
+    return countryList;
+  } catch (error) {
+    console.error("Error building country dropdown:", error);
     throw error;
   }
 };

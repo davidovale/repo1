@@ -128,11 +128,13 @@ async function addInventory(
   inv_price,
   inv_miles,
   inv_color,
+  country_id,
   classification_id
 ) {
   try {
+    console.log("id de country: "+country_id)
     const sql = `INSERT INTO public.inventory (inv_make, inv_model, inv_year, inv_description, 
-    inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
+    inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, country_id, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`;
     const inputList = [
       inv_make,
       inv_model,
@@ -143,6 +145,7 @@ async function addInventory(
       inv_price,
       inv_miles,
       inv_color,
+      country_id,
       classification_id,
     ];
     console.log(inputList);
@@ -167,12 +170,13 @@ async function updateInventory(
   inv_miles,
   inv_color,
   classification_id,
+  country_id,
   inv_id
 ) {
   try {
     const sql =
       "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_year = $3, inv_description = $4, inv_image = $5, inv_thumbnail = $6, inv_price = $7, inv_miles = $8, inv_color = $9, classification_id = $10 WHERE inv_id = $11 RETURNING *";
-      console.log(inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id, inv_id)
+      //console.log(inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color, classification_id, inv_id)
       const data = await pool.query(sql, [
       inv_make,
       inv_model,
