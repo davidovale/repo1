@@ -99,7 +99,7 @@ main {
   padding: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 0.5fr 1fr;
+  grid-template-rows: 300px 1fr;
 }
 
 .box1 {
@@ -220,10 +220,16 @@ footer {
 }
 
 #inv-display{
-  margin: 0;
-  padding: 0;
+  margin: 5px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
+
+}
+
+.content-list-vehicle{
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
  
 #inv-display li{
@@ -231,6 +237,8 @@ footer {
   border: 1px #ccc solid;
   list-style-type: none;
   flex: 1 1 auto;
+  padding: 5px;
+  margin: 5px;
 }
  
 #inv-display li img {
@@ -499,4 +507,3 @@ input:required:invalid, input:focus:invalid {
 }
 
 }
-
